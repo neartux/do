@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/tx
+      http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <bean id="doEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="doPU"/>
+        <property name="dataSource" ref="doDataSource" />
+        <property name="packagesToScan">
+            <array>
+                <value>com.reliablesystems.doctoroffice.core.domain</value>
+            </array>
+        </property>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL82Dialect</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="doDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:/doDS"/>
+    </bean>
+
+    <bean id="doTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="doEntityManagerFactory" />
+    </bean>
+
+    <bean id="persistenceExceptionTranslationPostProcessor" class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+    <jpa:repositories base-package="com.reliablesystems.doctoroffice.core.repository" entity-manager-factory-ref="doEntityManagerFactory" transaction-manager-ref="doTransactionManager"/>
+    <context:component-scan base-package="com.reliablesystems.doctoroffice.core.service" scoped-proxy="interfaces"/>
+    <context:component-scan base-package="com.reliablesystems.doctoroffice.core.dao" scoped-proxy="interfaces"/>
+
+    <tx:annotation-driven transaction-manager="doTransactionManager" proxy-target-class="true"/>
+
+</beans>
