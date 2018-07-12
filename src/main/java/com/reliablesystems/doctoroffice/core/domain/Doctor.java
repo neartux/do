@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 
 @NoArgsConstructor
@@ -22,6 +23,9 @@ public class Doctor {
     private String profileImage;
     @Column(name = "signimage")
     private String signImage;
+    @Column(name = "createdat")
+    @Temporal(TemporalType.DATE)
+    private Date createdAt;
     @JoinColumn(name = "statusid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Status status;

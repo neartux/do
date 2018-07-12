@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 
 @NoArgsConstructor
@@ -21,6 +22,9 @@ public class Patient {
     private String expedient;
     @Column(name = "profileimage")
     private String profileImage;
+    @Column(name = "createdat")
+    @Temporal(TemporalType.DATE)
+    private Date createdAt;
     @JoinColumn(name = "statusid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Status status;

@@ -12,12 +12,14 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name = "user")
+@Table(name = "usuario")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
+    @Column(name = "username")
+    private String userName;
     @Column(name = "password")
     private String password;
     @Column(name = "createdat", nullable = false)
