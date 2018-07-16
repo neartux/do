@@ -55,10 +55,6 @@ public final class NumberUtil {
     private NumberUtil() {
     }
 
-    public static Double getResidue(Double num1, Double num2) {
-        return num1 % num2;
-    }
-
     public static int stringToInt(String number) {
         if (number != null && number.length() > ZERO_INT) {
             return Integer.parseInt(number);
