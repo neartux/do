@@ -18,6 +18,7 @@ public class PatientTO {
     private String firstName;
     private String lastName;
     private Date birthDate;
+    private String birthDateS;
     private String identifier;
     private String sex;
     private String civilStatus;
