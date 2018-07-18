@@ -80,4 +80,21 @@ public class PatientDAOImpl implements PatientDAO {
             return NumberUtil.ZERO_INT;
         }
     }
+
+    /**
+     * Query to find max id of patients
+     *
+     * @return Max id
+     */
+    @Override
+    public Long findMaxPatientId() {
+        String sql = "select case when max(id) is null then " + NumberUtil.ZERO_LONG + " else max(id) end" +
+                " from patient";
+
+        try {
+            return jdbcTemplate.queryForObject(sql, Long.class);
+        } catch (EmptyResultDataAccessException e) {
+            return NumberUtil.ZERO_LONG;
+        }
+    }
 }

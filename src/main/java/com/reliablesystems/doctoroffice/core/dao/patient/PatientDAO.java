@@ -8,4 +8,6 @@ public interface PatientDAO {
     List<PatientTO> findAllPatients(int ofset, int limit, String search);
 
     int finAllPatientsCount(String search);
+
+    Long findMaxPatientId();
 }
