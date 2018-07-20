@@ -122,4 +122,20 @@ public class PatientServiceImpl implements PatientService {
         patientInactive.setStatus(new Status(StatusKeys.INACTIVE_STATUS));
         patientRepository.save(patientInactive);
     }
+
+    /**
+     * Method to update profile picture path
+     *
+     * @param id Id patient
+     * @param path New path of profile picture
+     */
+    @Override
+    public void updateProfilePicturePath(long id, String path) {
+        Patient patient = findPatientById(id);
+        if (patient == null) {
+            throw new BackEndException("Patient Not Found");
+        }
+        patient.setProfileImage(path);
+        patientRepository.save(patient);
+    }
 }

@@ -9,6 +9,8 @@ public final class StringUtil {
     public static final String EMPTY = "";
     public static final String COMMA = ",";
     public static final String DASH_ = "_";
+    public static final String SLASH = "/";
+    public static final String DOT = ".";
     public static final String STRING_ACCENTED = "áÁéÉíÍóÓúÚñÑ";
     public static final String STRING_UNACCENTED = "aAeEiIoOuUnN";
     public static final String STRING_ACCENTED_NO_N = "áÁéÉíÍóÓúÚ";

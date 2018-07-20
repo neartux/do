@@ -17,4 +17,6 @@ public interface PatientService {
     void updatePatient(PatientTO patientTO);
 
     void inactivePatient(long id);
+
+    void updateProfilePicturePath(long id, String path);
 }
