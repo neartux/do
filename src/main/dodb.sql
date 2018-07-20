@@ -2768,3 +2768,13 @@ INSERT INTO city (statusid, stateid, description) VALUES (1, (SELECT max(id) fro
 INSERT INTO city (statusid, stateid, description) VALUES (1, (SELECT max(id) from state),'Villa Hidalgo');
 INSERT INTO city (statusid, stateid, description) VALUES (1, (SELECT max(id) from state),'Villanueva');
 INSERT INTO city (statusid, stateid, description) VALUES (1, (SELECT max(id) from state),'Zacatecas');
+
+insert into bloodtype (description) values ('NA');
+insert into bloodtype (description) values ('O+');
+insert into bloodtype (description) values ('O-');
+insert into bloodtype (description) values ('A+');
+insert into bloodtype (description) values ('A-');
+insert into bloodtype (description) values ('B+');
+insert into bloodtype (description) values ('B-');
+insert into bloodtype (description) values ('AB+');
+insert into bloodtype (description) values ('AB-');
