@@ -4,6 +4,7 @@ import com.reliablesystems.doctoroffice.core.domain.*;
 import com.reliablesystems.doctoroffice.core.to.patient.PatientTO;
 import com.reliablesystems.doctoroffice.core.utils.common.ApplicationKeys;
 import com.reliablesystems.doctoroffice.core.utils.common.DateUtil;
+import com.reliablesystems.doctoroffice.core.utils.common.NumberUtil;
 
 public final class PatientUtil {
 
@@ -20,6 +21,7 @@ public final class PatientUtil {
         PersonalData personalData = new PersonalData();
         personalData.setFirstName(patientTO.getFirstName());
         personalData.setLastName(patientTO.getLastName());
+        System.out.println("patientTO.getBirthDateS() = " + patientTO.getBirthDateS());
         personalData.setBirthDate(DateUtil.stringToDate(patientTO.getBirthDateS(), ApplicationKeys.DEFAULT_PATERN));
         personalData.setBloodType(new BloodType(patientTO.getBloodTypeId()));
         personalData.setCivilStatus(patientTO.getCivilStatus());

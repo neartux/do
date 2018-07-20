@@ -177,7 +177,7 @@ CREATE TABLE patient (
   locationdataid bigint,
   expedient character varying(20) unique,
   profileimage character varying(255),
-  createdat timestamp without time zone,
+  createdat timestamp with time zone,
   CONSTRAINT patient_pkey PRIMARY KEY (id),
   CONSTRAINT patient_statusid FOREIGN KEY (statusid)
   REFERENCES status (id) MATCH SIMPLE

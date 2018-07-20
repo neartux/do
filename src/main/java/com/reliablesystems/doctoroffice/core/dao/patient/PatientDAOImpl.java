@@ -35,7 +35,7 @@ public class PatientDAOImpl implements PatientDAO {
     @Override
     public List<PatientTO> findAllPatients(int ofset, int limit, String search) {
         String sql = "select patient.id,patient.expedient,patient.profileimage,personaldata.firstname,personaldata.lastname,personaldata.birthdate,personaldata.sex,personaldata.civilstatus," +
-                "bloodtype.description as bloodtype,locationdata.address,locationdata.zipcode,locationdata.cellphone,locationdata.phone,locationdata.email,city.description" +
+                "bloodtype.description as bloodtype,bloodtype.id as bloodTypeId,locationdata.address,locationdata.zipcode,locationdata.cellphone,locationdata.phone,locationdata.email,city.description" +
                 " from patient" +
                 " inner join personaldata on patient.personaldataid = personaldata.id" +
                 " left join bloodtype on personaldata.bloodtypeid = bloodtype.id" +
@@ -63,7 +63,7 @@ public class PatientDAOImpl implements PatientDAO {
      */
     @Override
     public int finAllPatientsCount(String search) {
-        String sql = "count(*)" +
+        String sql = "select count(*)" +
                 " from patient" +
                 " inner join personaldata on patient.personaldataid = personaldata.id" +
                 " left join bloodtype on personaldata.bloodtypeid = bloodtype.id" +
