@@ -30,4 +30,22 @@ public final class CompanyUtil {
 
         return company;
     }
+
+    /**
+     * Method to get {@link Company} updated
+     *
+     * @param companyTO Company data
+     * @param company Companny to update
+     * @return Company updated
+     */
+    public static Company getCompanyToUpdate(CompanyTO companyTO, Company company) {
+        company.getLocationData().setAddress(companyTO.getAddress());
+        company.getLocationData().setPhone(companyTO.getPhone());
+        company.getLocationData().setCellPhone(companyTO.getCellPhone());
+        company.getLocationData().setEmail(companyTO.getEmail());
+
+        company.setDescription(companyTO.getDescription());
+
+        return company;
+    }
 }

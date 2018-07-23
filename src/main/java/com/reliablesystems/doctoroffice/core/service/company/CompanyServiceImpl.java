@@ -11,6 +11,7 @@ import com.reliablesystems.doctoroffice.core.service.user.UserService;
 import com.reliablesystems.doctoroffice.core.to.company.CompanyTO;
 import com.reliablesystems.doctoroffice.core.utils.common.DateUtil;
 import com.reliablesystems.doctoroffice.core.utils.common.StatusKeys;
+import com.reliablesystems.doctoroffice.core.utils.company.CompanyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -33,6 +34,17 @@ public class CompanyServiceImpl implements CompanyService {
     private UserService userService;
     @Autowired
     private CompanyConfigurationService companyConfigurationService;
+
+    /**
+     * Method to find a company by primary key
+     *
+     * @param id Primary key
+     * @return Company
+     */
+    @Override
+    public Company findCompanyById(long id) {
+        return companyRepository.findOne(id);
+    }
 
     /**
      * Query to find all companies
@@ -65,5 +77,28 @@ public class CompanyServiceImpl implements CompanyService {
         // Create company configuration
         companyConfigurationService.createCompanyConfiguration(company);
         return company.getId();
+    }
+
+    /**
+     * Method to update a data compnay
+     *
+     * @param companyTO Company data
+     */
+    @Override
+    public void updateCompany(CompanyTO companyTO ){
+        // Find company by id
+        Company company = findCompanyById(companyTO.getId());
+        // Validate company
+        if (company == null) {
+            throw new BackEndException("Company Not Found");
+        }
+        // Overrida company data
+        CompanyUtil.getCompanyToUpdate(companyTO, company);
+        // Save personal data
+        personalDataRepository.save(company.getPersonalData());
+        // Save location data
+        locationDataRepository.save(company.getLocationData());
+        // Save company
+        companyRepository.save(company);
     }
 }
