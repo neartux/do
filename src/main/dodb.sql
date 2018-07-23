@@ -155,6 +155,7 @@ create table role (
 insert into role (name) values ('generico');
 insert into role (name) values ('superuser');
 insert into role (name) values ('administrator');
+insert into role (name) values ('doctor');
 
 CREATE TABLE usuario (
   id bigserial not null,

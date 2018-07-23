@@ -34,7 +34,7 @@ public class PersonalData {
     @Column(name = "civilstatus")
     private String civilStatus;
     @JoinColumn(name = "bloodtypeid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private BloodType bloodType;
     @JsonIgnore
     @OneToMany( mappedBy = "personalData")

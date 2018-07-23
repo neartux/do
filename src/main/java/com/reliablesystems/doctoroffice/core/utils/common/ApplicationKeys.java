@@ -12,4 +12,8 @@ public final class ApplicationKeys {
     public static final String FOLDER_FILES = "files";
     public static final String FOLDER_PATIENT = "patient-";
     public static final String FOLDER_PATIENT_PROFILE_PICTURE = "profilepicture";
+    public static final Long ROLE_GENERIC_ID = 1L;
+    public static final Long ROLE_SUPERUSER_ID = 2L;
+    public static final Long ROLE_ADMINISTRATOR_ID = 3L;
+    public static final Long ROLE_DOCTOR_ID = 4L;
 }

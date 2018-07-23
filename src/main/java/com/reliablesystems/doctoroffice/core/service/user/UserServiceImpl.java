@@ -1,11 +1,15 @@
 package com.reliablesystems.doctoroffice.core.service.user;
 
+import com.reliablesystems.doctoroffice.core.domain.Company;
 import com.reliablesystems.doctoroffice.core.domain.Role;
+import com.reliablesystems.doctoroffice.core.domain.Status;
 import com.reliablesystems.doctoroffice.core.domain.User;
 import com.reliablesystems.doctoroffice.core.exception.BackEndException;
+import com.reliablesystems.doctoroffice.core.repository.LocationDataRepository;
+import com.reliablesystems.doctoroffice.core.repository.PersonalDataRepository;
 import com.reliablesystems.doctoroffice.core.repository.UserRepository;
-import com.reliablesystems.doctoroffice.core.utils.common.NumberUtil;
-import com.reliablesystems.doctoroffice.core.utils.common.StatusKeys;
+import com.reliablesystems.doctoroffice.core.utils.common.*;
+import com.reliablesystems.doctoroffice.core.utils.user.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -19,6 +23,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PersonalDataRepository personalDataRepository;
+    @Autowired
+    private LocationDataRepository locationDataRepository;
 
     /**
      * Method to find user by username and status is active
@@ -52,4 +60,37 @@ public class UserServiceImpl implements UserService {
             return new ArrayList<>();
         }
     }
+
+    /**
+     * Method to create a new user for a new company
+     *
+     * @param company Company data
+     */
+    @Override
+    public Long createAdminUserForCompany(Company company) {
+        User user = new User();
+        user.setPersonalData(UserUtil.getNewPersonalData(company.getPersonalData()));
+        user.setLocationData(UserUtil.getNewLocationData(company.getLocationData()));
+        // Save personal data
+        personalDataRepository.save(user.getPersonalData());
+        // Save location data
+        locationDataRepository.save(user.getLocationData());
+        // Save user
+        user.setCreatedAt(DateUtil.nowTimestamp());
+        user.setCompany(company);
+        user.setStatus(new Status(StatusKeys.ACTIVE_STATUS));
+        user.setUserName(company.getDescription() + StringUtil.DOT + company.getId());
+        user.setPassword(UserUtil.digestMD5("demo"));
+        // Add roles
+        user.getRoleList().add(new Role(ApplicationKeys.ROLE_GENERIC_ID));
+        user.getRoleList().add(new Role(ApplicationKeys.ROLE_ADMINISTRATOR_ID));
+
+        userRepository.save(user);
+
+        // TODO in a future send a email with credentials
+
+        return user.getId();
+    }
+
+
 }

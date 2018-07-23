@@ -35,7 +35,7 @@ public class Company {
     @ManyToOne(optional = false)
     private LocationData locationData;
     @JoinColumn(name = "billingdataid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private BillingData billingData;
     @JsonIgnore
     @OneToMany( mappedBy = "company")
