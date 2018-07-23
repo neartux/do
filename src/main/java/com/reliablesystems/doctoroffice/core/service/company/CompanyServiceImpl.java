@@ -31,6 +31,8 @@ public class CompanyServiceImpl implements CompanyService {
     private LocationDataRepository locationDataRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private CompanyConfigurationService companyConfigurationService;
 
     /**
      * Query to find all companies
@@ -60,6 +62,8 @@ public class CompanyServiceImpl implements CompanyService {
         companyRepository.save(company);
         // Create a administrator user
         userService.createAdminUserForCompany(company);
+        // Create company configuration
+        companyConfigurationService.createCompanyConfiguration(company);
         return company.getId();
     }
 }

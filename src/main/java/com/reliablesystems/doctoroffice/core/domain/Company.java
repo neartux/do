@@ -40,6 +40,8 @@ public class Company {
     @JsonIgnore
     @OneToMany( mappedBy = "company")
     private Collection<User> userCollection;
+    @OneToOne(optional = false, mappedBy = "company")
+    private CompanyConfiguration companyConfiguration;
 
     public Company(long id) { this.id = id; }
 

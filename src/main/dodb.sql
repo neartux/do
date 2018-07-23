@@ -146,6 +146,16 @@ CREATE TABLE company (
   ON UPDATE RESTRICT ON DELETE RESTRICT
 );
 
+CREATE TABLE companyconfiguration (
+  id bigserial not null,
+  officesnumber bigint not null,
+  companyid bigint,
+  CONSTRAINT companyconfiguration_pkey PRIMARY KEY (id),
+  CONSTRAINT companyconfiguration_companyid FOREIGN KEY (companyid)
+  REFERENCES company (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT
+);
+
 create table role (
   id bigserial not null,
   name character varying(50) not null,
