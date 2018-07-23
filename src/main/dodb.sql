@@ -146,13 +146,23 @@ CREATE TABLE company (
   ON UPDATE RESTRICT ON DELETE RESTRICT
 );
 
+create table role (
+  id bigserial not null,
+  name character varying(50) not null,
+  constraint role_pkey primary key (id)
+);
+
+insert into role (name) values ('generico');
+insert into role (name) values ('superuser');
+insert into role (name) values ('administrator');
+
 CREATE TABLE usuario (
   id bigserial not null,
   statusid bigint not null,
   personaldataid bigint,
   locationdataid bigint,
   companyid bigint,
-  username character varying(100),
+  username character varying(100) not null unique,
   password character varying(100),
   createdat timestamp with time zone,
   CONSTRAINT usuario_pkey PRIMARY KEY (id),
@@ -168,6 +178,18 @@ CREATE TABLE usuario (
   CONSTRAINT usuario_companyid FOREIGN KEY (companyid)
   REFERENCES company (id) MATCH SIMPLE
   ON UPDATE RESTRICT ON DELETE RESTRICT
+);
+
+CREATE TABLE roleuser (
+  idrole bigint not null,
+  iduser bigint not null,
+  constraint roleuser_pk primary key (iduser, idrole),
+  constraint roleuser_idrole foreign key (idrole)
+  references role (id) match simple
+  on update restrict on delete restrict ,
+  constraint roleuser_iduser foreign key (iduser)
+  references usuario (id) match simple
+  on update restrict on delete restrict
 );
 
 CREATE TABLE patient (
@@ -2778,3 +2800,10 @@ insert into bloodtype (description) values ('B+');
 insert into bloodtype (description) values ('B-');
 insert into bloodtype (description) values ('AB+');
 insert into bloodtype (description) values ('AB-');
+
+insert into personaldata (bloodtypeid, firstname, lastname, sex) values (1,'Ricardo','Dzul', 'MALE');
+insert into locationdata (address, cellphone) values ('Merida Yuc.', '9993599516');
+insert into usuario(statusid, personaldataid, locationdataid, username, password) values (1, (select max(id) from personaldata), (select max(id) from locationdata), 'admin', md5('demo'));
+insert into roleuser (idrole, iduser) values (1, (select max(id) from usuario));
+insert into roleuser (idrole, iduser) values (2, (select max(id) from usuario));
+insert into roleuser (idrole, iduser) values (3, (select max(id) from usuario));

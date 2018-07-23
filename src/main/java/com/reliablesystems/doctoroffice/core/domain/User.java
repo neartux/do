@@ -1,11 +1,13 @@
 package com.reliablesystems.doctoroffice.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @NoArgsConstructor
@@ -18,7 +20,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
-    @Column(name = "username")
+    @Column(name = "username", nullable = false, unique = true)
     private String userName;
     @Column(name = "password")
     private String password;
@@ -35,8 +37,14 @@ public class User {
     @ManyToOne(optional = false)
     private LocationData locationData;
     @JoinColumn(name = "companyid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Company company;
+    @JsonIgnore
+    @JoinTable(name = "roleuser", joinColumns = {
+            @JoinColumn(name = "iduser", referencedColumnName = "id")}, inverseJoinColumns = {
+            @JoinColumn(name = "idrole", referencedColumnName = "id")})
+    @ManyToMany
+    private List<Role> roleList;
 
     public User(long id) { this.id = id; }
 

@@ -30,7 +30,7 @@ public class LocationData {
     @Column(name = "email")
     private String email;
     @JoinColumn(name = "cityid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private City city;
     @JsonIgnore
     @OneToMany( mappedBy = "locationData")
