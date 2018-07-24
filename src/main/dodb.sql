@@ -208,7 +208,7 @@ CREATE TABLE patient (
   statusid bigint not null,
   personaldataid bigint,
   locationdataid bigint,
-  expedient character varying(20) unique,
+  expedient character varying(20) unique not null,
   profileimage character varying(255),
   createdat timestamp with time zone,
   CONSTRAINT patient_pkey PRIMARY KEY (id),
