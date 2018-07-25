@@ -8,9 +8,11 @@ public final class ApplicationKeys {
     public static final String SEX_MALE = "MALE";
     public static final String DEFAULT_PATERN = "dd/MM/yyyy";
     public static final String PATH_SERVER_FILES = System.getProperty("user.dir") + "/../standalone";
+    public static final String PATH_AVATAR_SERVER_IMAGE = System.getProperty("user.dir") + "/../standalone/files/images/no-avatar.png";
     public static final String[] ARRAY_AVAILABLE_IMAGES_PROFILE = {"jpg", "jpeg", "png"};
     public static final String FOLDER_FILES = "files";
     public static final String FOLDER_PATIENT = "patient-";
+    public static final Long MAX_SIZE_FILE = 50000L;
     public static final String FOLDER_PATIENT_PROFILE_PICTURE = "profilepicture";
     public static final Long ROLE_GENERIC_ID = 1L;
     public static final Long ROLE_SUPERUSER_ID = 2L;

@@ -21,7 +21,6 @@ public final class PatientUtil {
         PersonalData personalData = new PersonalData();
         personalData.setFirstName(patientTO.getFirstName());
         personalData.setLastName(patientTO.getLastName());
-        System.out.println("patientTO.getBirthDateS() = " + patientTO.getBirthDateS());
         personalData.setBirthDate(DateUtil.stringToDate(patientTO.getBirthDateS(), ApplicationKeys.DEFAULT_PATERN));
         personalData.setBloodType(new BloodType(patientTO.getBloodTypeId()));
         personalData.setCivilStatus(patientTO.getCivilStatus());
