@@ -42,6 +42,15 @@ public class Company {
     private Collection<User> userCollection;
     @OneToOne(optional = false, mappedBy = "company")
     private CompanyConfiguration companyConfiguration;
+    @JsonIgnore
+    @OneToMany( mappedBy = "company")
+    private Collection<Patient> patientCollection;
+    @JsonIgnore
+    @OneToMany( mappedBy = "company")
+    private Collection<Doctor> doctorCollection;
+    @JsonIgnore
+    @OneToMany( mappedBy = "company")
+    private Collection<DoctorsOffice> doctorsOfficeCollection;
 
     public Company(long id) { this.id = id; }
 

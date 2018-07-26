@@ -34,25 +34,27 @@ public class PatientServiceImpl implements PatientService {
     /**
      * Method to find all patient of the system
      *
+     * @param companyId Company that patient is
      * @param ofset Search start
      * @param limit Search limit
      * @param search Word
      * @return List of {@link PatientTO}
      */
     @Override
-    public List<PatientTO> findAllPatients(int ofset, int limit, String search) {
-        return patientDAO.findAllPatients(ofset, limit, search);
+    public List<PatientTO> findAllPatients(long companyId, int ofset, int limit, String search) {
+        return patientDAO.findAllPatients(companyId, ofset, limit, search);
     }
 
     /**
      * Method to get total of patient in the systems, with parameters
      *
+     * @param companyId Company that the patient is
      * @param search Word to search
      * @return Number of elements
      */
     @Override
-    public int finAllPatientsCount(String search) {
-        return patientDAO.finAllPatientsCount(search);
+    public int finAllPatientsCount(long companyId, String search) {
+        return patientDAO.finAllPatientsCount(companyId, search);
     }
 
     /**
@@ -81,7 +83,7 @@ public class PatientServiceImpl implements PatientService {
         // Save patient
         patient.setCreatedAt(DateUtil.nowTimestamp());
         patient.setStatus(new Status(StatusKeys.ACTIVE_STATUS));
-        patient.setExpedient(NumberUtil.longToString(NumberUtil.add(patientDAO.findMaxPatientId(), NumberUtil.ONE_LONG).longValue()));
+        patient.setExpedient(NumberUtil.longToString(NumberUtil.add(patientDAO.findMaxPatientIdByCompany(patient.getCompany().getId()), NumberUtil.ONE_LONG).longValue()));
         patientRepository.save(patient);
 
         return patient.getId();

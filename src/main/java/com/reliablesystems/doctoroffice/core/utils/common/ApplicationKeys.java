@@ -18,4 +18,6 @@ public final class ApplicationKeys {
     public static final Long ROLE_SUPERUSER_ID = 2L;
     public static final Long ROLE_ADMINISTRATOR_ID = 3L;
     public static final Long ROLE_DOCTOR_ID = 4L;
+    public static final String DATA_CURRENT_USER = "_DATA_CURRENT_USER";
+    public static final String DATA_CURRENT_COMPANY = "_DATA_CURRENT_COMPANY";
 }

@@ -32,6 +32,7 @@ public class PatientTO {
     private String email;
     private Long cityId;
     private String city;
+    private Long companyId;
 
     @Override
     public String toString() {

@@ -34,6 +34,9 @@ public class Patient {
     @JoinColumn(name = "locationdataid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private LocationData locationData;
+    @JoinColumn(name = "companyid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Company company;
 
     public Patient(long id) { this.id = id; }
 

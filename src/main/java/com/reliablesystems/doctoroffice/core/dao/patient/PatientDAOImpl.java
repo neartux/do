@@ -27,13 +27,14 @@ public class PatientDAOImpl implements PatientDAO {
     /**
      * Query to find all patient of the system
      *
+     * @param companyId Company that patient is
      * @param ofset Search start
      * @param limit Search limit
      * @param search Word
      * @return List of {@link PatientTO}
      */
     @Override
-    public List<PatientTO> findAllPatients(int ofset, int limit, String search) {
+    public List<PatientTO> findAllPatients(long companyId, int ofset, int limit, String search) {
         String sql = "select patient.id,patient.expedient,patient.profileimage,personaldata.firstname,personaldata.lastname,personaldata.birthdate,personaldata.sex,personaldata.civilstatus," +
                 "bloodtype.description as bloodtype,bloodtype.id as bloodTypeId,locationdata.address,locationdata.zipcode,locationdata.cellphone,locationdata.phone,locationdata.email,city.description" +
                 " from patient" +
@@ -58,11 +59,12 @@ public class PatientDAOImpl implements PatientDAO {
     /**
      * Query to get total of patient in the systems, with parameters
      *
+     * @param companyId Company that patient is
      * @param search Word to search
      * @return Number of elements
      */
     @Override
-    public int finAllPatientsCount(String search) {
+    public int finAllPatientsCount(long companyId, String search) {
         String sql = "select count(*)" +
                 " from patient" +
                 " inner join personaldata on patient.personaldataid = personaldata.id" +
@@ -84,12 +86,14 @@ public class PatientDAOImpl implements PatientDAO {
     /**
      * Query to find max id of patients
      *
+     * @param companyId Company id
      * @return Max id
      */
     @Override
-    public Long findMaxPatientId() {
+    public Long findMaxPatientIdByCompany(long companyId) {
         String sql = "select case when max(id) is null then " + NumberUtil.ZERO_LONG + " else max(id) end" +
-                " from patient";
+                " from patient" +
+                " where companyid = " + companyId;
 
         try {
             return jdbcTemplate.queryForObject(sql, Long.class);

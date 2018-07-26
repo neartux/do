@@ -29,6 +29,9 @@ public class DoctorsOffice {
     @JoinColumn(name = "doctorid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Doctor doctor;
+    @JoinColumn(name = "companyid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Company company;
 
     public DoctorsOffice(long id) { this.id = id; }
 

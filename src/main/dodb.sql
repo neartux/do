@@ -208,7 +208,8 @@ CREATE TABLE patient (
   statusid bigint not null,
   personaldataid bigint,
   locationdataid bigint,
-  expedient character varying(20) unique not null,
+  companyid bigint not null,
+  expedient character varying(20) not null,
   profileimage character varying(255),
   createdat timestamp with time zone,
   CONSTRAINT patient_pkey PRIMARY KEY (id),
@@ -220,7 +221,11 @@ CREATE TABLE patient (
   ON UPDATE RESTRICT ON DELETE RESTRICT,
   CONSTRAINT patient_locationdataid FOREIGN KEY (locationdataid)
   REFERENCES locationdata (id) MATCH SIMPLE
-  ON UPDATE RESTRICT ON DELETE RESTRICT
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT patient_companyid FOREIGN KEY (companyid)
+  REFERENCES company (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT patient_companyid_expedient UNIQUE (companyid, expedient)
 );
 
 CREATE TABLE doctor (
@@ -229,6 +234,7 @@ CREATE TABLE doctor (
   userid bigint not null,
   personaldataid bigint,
   locationdataid bigint,
+  companyid bigint not null,
   professionalcard character varying(20) unique,
   profileimage character varying(255),
   signimage character varying(255),
@@ -245,6 +251,9 @@ CREATE TABLE doctor (
   ON UPDATE RESTRICT ON DELETE RESTRICT,
   CONSTRAINT doctor_locationdataid FOREIGN KEY (locationdataid)
   REFERENCES locationdata (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT doctor_companyid FOREIGN KEY (companyid)
+  REFERENCES company (id) MATCH SIMPLE
   ON UPDATE RESTRICT ON DELETE RESTRICT
 );
 
@@ -252,6 +261,7 @@ CREATE TABLE doctorsoffice (
   id bigserial not null,
   statusid bigint not null,
   doctorid bigint,
+  companyid bigint not null,
   description character varying(255),
   createdat timestamp with time zone,
   CONSTRAINT createdat_pkey PRIMARY KEY (id),
@@ -260,6 +270,9 @@ CREATE TABLE doctorsoffice (
   ON UPDATE RESTRICT ON DELETE RESTRICT,
   CONSTRAINT createdat_doctorid FOREIGN KEY (doctorid)
   REFERENCES doctor (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT doctorsoffice_companyid FOREIGN KEY (companyid)
+  REFERENCES company (id) MATCH SIMPLE
   ON UPDATE RESTRICT ON DELETE RESTRICT
 );
 
