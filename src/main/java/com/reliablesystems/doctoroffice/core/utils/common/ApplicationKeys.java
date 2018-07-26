@@ -12,8 +12,10 @@ public final class ApplicationKeys {
     public static final String[] ARRAY_AVAILABLE_IMAGES_PROFILE = {"jpg", "jpeg", "png"};
     public static final String FOLDER_FILES = "files";
     public static final String FOLDER_PATIENT = "patient-";
+    public static final String FOLDER_DOCTOR = "doctor-";
     public static final Long MAX_SIZE_FILE = 50000L;
     public static final String FOLDER_PATIENT_PROFILE_PICTURE = "profilepicture";
+    public static final String FOLDER_DOCTOR_PROFILE_PICTURE = "profilepicture";
     public static final Long ROLE_GENERIC_ID = 1L;
     public static final Long ROLE_SUPERUSER_ID = 2L;
     public static final Long ROLE_ADMINISTRATOR_ID = 3L;

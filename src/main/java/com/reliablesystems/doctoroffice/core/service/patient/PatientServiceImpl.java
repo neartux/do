@@ -41,8 +41,8 @@ public class PatientServiceImpl implements PatientService {
      * @return List of {@link PatientTO}
      */
     @Override
-    public List<PatientTO> findAllPatients(long companyId, int ofset, int limit, String search) {
-        return patientDAO.findAllPatients(companyId, ofset, limit, search);
+    public List<PatientTO> findPatientsByCompany(long companyId, int ofset, int limit, String search) {
+        return patientDAO.findPatientsByCompany(companyId, ofset, limit, search);
     }
 
     /**
@@ -53,8 +53,8 @@ public class PatientServiceImpl implements PatientService {
      * @return Number of elements
      */
     @Override
-    public int finAllPatientsCount(long companyId, String search) {
-        return patientDAO.finAllPatientsCount(companyId, search);
+    public int findAllPatientsCountByCompany(long companyId, String search) {
+        return patientDAO.findAllPatientsCountByCompany(companyId, search);
     }
 
     /**
@@ -101,7 +101,7 @@ public class PatientServiceImpl implements PatientService {
             throw new BackEndException("Patient Not Found");
         }
         // Override patient data
-        patientToUpdate = PatientUtil.getPatientToUpdate(patientTO, patientToUpdate);
+        PatientUtil.updatePatientData(patientTO, patientToUpdate);
         // Save personal data
         personalDataRepository.save(patientToUpdate.getPersonalData());
         // Save location data

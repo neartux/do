@@ -34,7 +34,7 @@ public class PatientDAOImpl implements PatientDAO {
      * @return List of {@link PatientTO}
      */
     @Override
-    public List<PatientTO> findAllPatients(long companyId, int ofset, int limit, String search) {
+    public List<PatientTO> findPatientsByCompany(long companyId, int ofset, int limit, String search) {
         String sql = "select patient.id,patient.expedient,patient.profileimage,personaldata.firstname,personaldata.lastname,personaldata.birthdate,personaldata.sex,personaldata.civilstatus," +
                 "bloodtype.description as bloodtype,bloodtype.id as bloodTypeId,locationdata.address,locationdata.zipcode,locationdata.cellphone,locationdata.phone,locationdata.email,city.description" +
                 " from patient" +
@@ -42,7 +42,8 @@ public class PatientDAOImpl implements PatientDAO {
                 " left join bloodtype on personaldata.bloodtypeid = bloodtype.id" +
                 " inner join locationdata on patient.locationdataid = locationdata.id" +
                 " left join city on locationdata.cityid = city.id" +
-                " where patient.statusid = " + StatusKeys.ACTIVE_STATUS;
+                " where patient.companyid = ?" +
+                " and patient.statusid = " + StatusKeys.ACTIVE_STATUS;
         if(search != null && !search.isEmpty()) {
             sql += " and ((upper(personaldata.firstname) like upper('%"+search+"%')) or (upper(personaldata.lastname) like upper('%"+search+"%')) or (upper(patient.expedient) like upper('%"+search+"%')))";
         }
@@ -50,7 +51,7 @@ public class PatientDAOImpl implements PatientDAO {
                 " offset " + ofset + " limit " + limit;
 
         try {
-            return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(PatientTO.class));
+            return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(PatientTO.class), companyId);
         } catch (EmptyResultDataAccessException e) {
             return new ArrayList<>();
         }
@@ -64,20 +65,21 @@ public class PatientDAOImpl implements PatientDAO {
      * @return Number of elements
      */
     @Override
-    public int finAllPatientsCount(long companyId, String search) {
+    public int findAllPatientsCountByCompany(long companyId, String search) {
         String sql = "select count(*)" +
                 " from patient" +
                 " inner join personaldata on patient.personaldataid = personaldata.id" +
                 " left join bloodtype on personaldata.bloodtypeid = bloodtype.id" +
                 " inner join locationdata on patient.locationdataid = locationdata.id" +
                 " left join city on locationdata.cityid = city.id" +
-                " where patient.statusid = " + StatusKeys.ACTIVE_STATUS;
+                " where patient.companyid = ?" +
+                " and patient.statusid = " + StatusKeys.ACTIVE_STATUS;
         if(search != null && !search.isEmpty()) {
             sql += " and ((upper(personaldata.firstname) like upper('%"+search+"%')) or (upper(personaldata.lastname) like upper('%"+search+"%')) or (upper(patient.expedient) like upper('%"+search+"%')))";
         }
 
         try {
-            return jdbcTemplate.queryForObject(sql, Integer.class);
+            return jdbcTemplate.queryForObject(sql, Integer.class, companyId);
         } catch (EmptyResultDataAccessException e) {
             return NumberUtil.ZERO_INT;
         }
@@ -93,10 +95,10 @@ public class PatientDAOImpl implements PatientDAO {
     public Long findMaxPatientIdByCompany(long companyId) {
         String sql = "select case when max(id) is null then " + NumberUtil.ZERO_LONG + " else max(id) end" +
                 " from patient" +
-                " where companyid = " + companyId;
+                " where companyid = ?";
 
         try {
-            return jdbcTemplate.queryForObject(sql, Long.class);
+            return jdbcTemplate.queryForObject(sql, Long.class, companyId);
         } catch (EmptyResultDataAccessException e) {
             return NumberUtil.ZERO_LONG;
         }

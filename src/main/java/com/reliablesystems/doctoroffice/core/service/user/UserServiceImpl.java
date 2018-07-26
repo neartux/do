@@ -1,9 +1,6 @@
 package com.reliablesystems.doctoroffice.core.service.user;
 
-import com.reliablesystems.doctoroffice.core.domain.Company;
-import com.reliablesystems.doctoroffice.core.domain.Role;
-import com.reliablesystems.doctoroffice.core.domain.Status;
-import com.reliablesystems.doctoroffice.core.domain.User;
+import com.reliablesystems.doctoroffice.core.domain.*;
 import com.reliablesystems.doctoroffice.core.exception.BackEndException;
 import com.reliablesystems.doctoroffice.core.repository.LocationDataRepository;
 import com.reliablesystems.doctoroffice.core.repository.PersonalDataRepository;
@@ -27,6 +24,16 @@ public class UserServiceImpl implements UserService {
     private PersonalDataRepository personalDataRepository;
     @Autowired
     private LocationDataRepository locationDataRepository;
+
+    /**
+     * Method to find a user by id
+     * @param id Id user
+     * @return User
+     */
+    @Override
+    public User findUserById(long id) {
+        return userRepository.findOne(id);
+    }
 
     /**
      * Method to find user by username and status is active
@@ -59,6 +66,40 @@ public class UserServiceImpl implements UserService {
         } else {
             return new ArrayList<>();
         }
+    }
+
+    /**
+     * Method to create a user for a doctor
+     *
+     * @param doctor Doctor data
+     * @param userName Username of doctor
+     * @param password Password of doctor
+     * @return New user
+     */
+    @Override
+    public User createDoctorUser(Doctor doctor, String userName, String password) {
+        User user = new User();
+        user.setPersonalData(UserUtil.getNewPersonalData(doctor.getPersonalData()));
+        user.setLocationData(UserUtil.getNewLocationData(doctor.getLocationData()));
+        // Save personal data
+        personalDataRepository.save(user.getPersonalData());
+        // Save location data
+        locationDataRepository.save(user.getLocationData());
+        // Save user
+        user.setCreatedAt(DateUtil.nowTimestamp());
+        user.setCompany(doctor.getCompany());
+        user.setStatus(new Status(StatusKeys.ACTIVE_STATUS));
+        user.setUserName(userName);
+        user.setPassword(UserUtil.digestMD5(password));
+        // Add roles
+        user.getRoleList().add(new Role(ApplicationKeys.ROLE_GENERIC_ID));
+        user.getRoleList().add(new Role(ApplicationKeys.ROLE_DOCTOR_ID));
+
+        userRepository.save(user);
+
+        // TODO in a future send a email with credentials
+
+        return user;
     }
 
     /**

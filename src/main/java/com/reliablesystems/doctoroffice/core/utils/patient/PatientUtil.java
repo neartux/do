@@ -34,6 +34,7 @@ public final class PatientUtil {
         locationData.setEmail(patientTO.getEmail());
 
         Patient patient = new Patient();
+        patient.setCompany(new Company(patientTO.getCompanyId()));
         patient.setPersonalData(personalData);
         patient.setLocationData(locationData);
 
@@ -43,10 +44,9 @@ public final class PatientUtil {
     /**
      * Method that return {@link Patient} for update an patient
      *
-     * @param patientTO Data of new patient
-     * @return Object {@link Patient}
+     * @param patientTO Data of patient
      */
-    public static Patient getPatientToUpdate(PatientTO patientTO, Patient patient) {
+    public static void updatePatientData(PatientTO patientTO, Patient patient) {
         patient.getPersonalData().setFirstName(patientTO.getFirstName());
         patient.getPersonalData().setLastName(patientTO.getLastName());
         patient.getPersonalData().setBirthDate(DateUtil.stringToDate(patientTO.getBirthDateS(), ApplicationKeys.DEFAULT_PATERN));
@@ -59,7 +59,5 @@ public final class PatientUtil {
         patient.getLocationData().setCellPhone(patientTO.getCellPhone());
         patient.getLocationData().setPhone(patientTO.getPhone());
         patient.getLocationData().setEmail(patientTO.getEmail());
-
-        return patient;
     }
 }
