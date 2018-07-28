@@ -53,10 +53,10 @@ public class DoctorServiceImpl implements DoctorService {
      * @param ofset Search start
      * @param limit Search limit
      * @param search Word
-     * @return List of {@link Doctor}
+     * @return List of {@link DoctorTO}
      */
     @Override
-    public List<Doctor> findDoctorsByCompany(long companyId, int ofset, int limit, String search) {
+    public List<DoctorTO> findDoctorsByCompany(long companyId, int ofset, int limit, String search) {
         return doctorDAO.findDoctorsByCompany(companyId, ofset, limit, search);
     }
 

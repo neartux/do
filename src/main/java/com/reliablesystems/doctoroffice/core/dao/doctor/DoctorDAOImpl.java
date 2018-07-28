@@ -1,6 +1,6 @@
 package com.reliablesystems.doctoroffice.core.dao.doctor;
 
-import com.reliablesystems.doctoroffice.core.domain.Doctor;
+import com.reliablesystems.doctoroffice.core.to.doctor.DoctorTO;
 import com.reliablesystems.doctoroffice.core.utils.common.NumberUtil;
 import com.reliablesystems.doctoroffice.core.utils.common.StatusKeys;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +31,10 @@ public class DoctorDAOImpl implements DoctorDAO {
      * @param ofset Search start
      * @param limit Search limit
      * @param search Word
-     * @return List of {@link Doctor}
+     * @return List of {@link DoctorTO}
      */
     @Override
-    public List<Doctor> findDoctorsByCompany(long companyId, int ofset, int limit, String search) {
+    public List<DoctorTO> findDoctorsByCompany(long companyId, int ofset, int limit, String search) {
         String sql = "select doctor.id,doctor.personaldataid,doctor.locationdataid,doctor.professionalcard,doctor.profileimage," +
                 " personaldata.firstname,personaldata.lastname,personaldata.birthdate,personaldata.sex," +
                 " locationdata.address,locationdata.zipcode,locationdata.phone,locationdata.cellphone,locationdata.email" +
@@ -50,7 +50,7 @@ public class DoctorDAOImpl implements DoctorDAO {
                 " offset " + ofset + " limit " + limit;
 
         try {
-            return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Doctor.class), companyId);
+            return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(DoctorTO.class), companyId);
         } catch (EmptyResultDataAccessException e) {
             return new ArrayList<>();
         }

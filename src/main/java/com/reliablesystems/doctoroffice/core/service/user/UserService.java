@@ -12,6 +12,8 @@ public interface UserService {
 
     User findUserByUserName(String userName);
 
+    boolean existUserByUserName(String userName);
+
     List<Role> findRolesByUserId(long userId);
 
     User createDoctorUser(Doctor doctor, String userName, String password);

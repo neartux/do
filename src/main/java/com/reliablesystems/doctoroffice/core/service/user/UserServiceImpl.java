@@ -47,6 +47,18 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * Method to verify if an user exist by userName
+     *
+     * @param userName User name to verify
+     * @return Boolean with the result
+     */
+    @Override
+    public boolean existUserByUserName(String userName) {
+        Long numElem = userRepository.countByUserName(userName);
+        return numElem > NumberUtil.ZERO_LONG;
+    }
+
+    /**
      * Find roles by userid
      *
      * @param userId Id of user
@@ -78,6 +90,10 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User createDoctorUser(Doctor doctor, String userName, String password) {
+        // Verify if is valid username
+        if (existUserByUserName(userName)){
+            throw new BackEndException("El nombre de usuario ya existe en el sistema");
+        }
         User user = new User();
         user.setPersonalData(UserUtil.getNewPersonalData(doctor.getPersonalData()));
         user.setLocationData(UserUtil.getNewLocationData(doctor.getLocationData()));
@@ -92,6 +108,7 @@ public class UserServiceImpl implements UserService {
         user.setUserName(userName);
         user.setPassword(UserUtil.digestMD5(password));
         // Add roles
+        user.setRoleList(new ArrayList<Role>());
         user.getRoleList().add(new Role(ApplicationKeys.ROLE_GENERIC_ID));
         user.getRoleList().add(new Role(ApplicationKeys.ROLE_DOCTOR_ID));
 

@@ -8,7 +8,7 @@ import java.util.List;
 public interface DoctorService {
     Doctor findDoctorById(long id);
 
-    List<Doctor> findDoctorsByCompany(long companyId, int ofset, int limit, String search);
+    List<DoctorTO> findDoctorsByCompany(long companyId, int ofset, int limit, String search);
 
     int findDoctorsCountByCompany(long companyId, String search);
 
