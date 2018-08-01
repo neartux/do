@@ -130,7 +130,7 @@ CREATE TABLE company (
   locationdataid bigint,
   billingdataid bigint,
   description character varying(255),
-  createdat timestamp with time zone,
+  createdat timestamp without time zone,
   CONSTRAINT company_pkey PRIMARY KEY (id),
   CONSTRAINT company_statusid FOREIGN KEY (statusid)
   REFERENCES status (id) MATCH SIMPLE
@@ -175,7 +175,7 @@ CREATE TABLE usuario (
   companyid bigint,
   username character varying(100) not null unique,
   password character varying(100),
-  createdat timestamp with time zone,
+  createdat timestamp without time zone,
   CONSTRAINT usuario_pkey PRIMARY KEY (id),
   CONSTRAINT usuario_statusid FOREIGN KEY (statusid)
   REFERENCES status (id) MATCH SIMPLE
@@ -211,7 +211,7 @@ CREATE TABLE patient (
   companyid bigint not null,
   expedient character varying(20) not null,
   profileimage character varying(255),
-  createdat timestamp with time zone,
+  createdat timestamp without time zone,
   CONSTRAINT patient_pkey PRIMARY KEY (id),
   CONSTRAINT patient_statusid FOREIGN KEY (statusid)
   REFERENCES status (id) MATCH SIMPLE
@@ -238,7 +238,7 @@ CREATE TABLE doctor (
   professionalcard character varying(20) unique,
   profileimage character varying(255),
   signimage character varying(255),
-  createdat timestamp with time zone,
+  createdat timestamp without time zone,
   CONSTRAINT doctor_pkey PRIMARY KEY (id),
   CONSTRAINT doctor_statusid FOREIGN KEY (statusid)
   REFERENCES status (id) MATCH SIMPLE
@@ -263,7 +263,7 @@ CREATE TABLE doctorsoffice (
   doctorid bigint,
   companyid bigint not null,
   description character varying(255),
-  createdat timestamp with time zone,
+  createdat timestamp without time zone,
   CONSTRAINT createdat_pkey PRIMARY KEY (id),
   CONSTRAINT createdat_statusid FOREIGN KEY (statusid)
   REFERENCES status (id) MATCH SIMPLE

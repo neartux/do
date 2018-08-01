@@ -8,4 +8,6 @@ public interface DoctorDAO {
     List<DoctorTO> findDoctorsByCompany(long companyId, int ofset, int limit, String search);
 
     int findDoctorsCountByCompany(long companyId, String search);
+
+    List<DoctorTO> findDoctorsByCompany(long companyId);
 }

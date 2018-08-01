@@ -10,6 +10,8 @@ public interface DoctorService {
 
     List<DoctorTO> findDoctorsByCompany(long companyId, int ofset, int limit, String search);
 
+    List<DoctorTO> findDoctorsByCompany(long companyId);
+
     int findDoctorsCountByCompany(long companyId, String search);
 
     Long createDoctor(Doctor doctor, String userName, String password);

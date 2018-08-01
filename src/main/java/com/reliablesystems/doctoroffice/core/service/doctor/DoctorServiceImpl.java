@@ -61,6 +61,17 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     /**
+     * Method to find doctors by company
+     *
+     * @param companyId Compnay id
+     * @return List of doctors
+     */
+    @Override
+    public List<DoctorTO> findDoctorsByCompany(long companyId) {
+        return doctorDAO.findDoctorsByCompany(companyId);
+    }
+
+    /**
      * Method to get total of doctors in the systems
      *
      * @param companyId Company that doctor is

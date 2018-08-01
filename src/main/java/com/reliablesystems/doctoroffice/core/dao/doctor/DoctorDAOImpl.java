@@ -81,4 +81,26 @@ public class DoctorDAOImpl implements DoctorDAO {
             return NumberUtil.ZERO_INT;
         }
     }
+
+    /**
+     * Find doctors by company
+     *
+     * @param companyId Compnay id
+     * @return List of doctors
+     */
+    @Override
+    public List<DoctorTO> findDoctorsByCompany(long companyId) {
+        String sql = "select doctor.id,personaldata.firstname,personaldata.lastname" +
+                " from doctor" +
+                " left join personaldata on doctor.personaldataid = personaldata.id" +
+                " where doctor.companyid = ?" +
+                " and statusid = " + StatusKeys.ACTIVE_STATUS +
+                " order by personaldata.firstname;";
+
+        try {
+            return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(DoctorTO.class), companyId);
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<>();
+        }
+    }
 }
