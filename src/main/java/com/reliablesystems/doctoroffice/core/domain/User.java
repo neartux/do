@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -15,7 +17,8 @@ import java.util.Objects;
 @Setter
 @Entity
 @Table(name = "usuario")
-public class User {
+public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
@@ -36,6 +39,8 @@ public class User {
     @JoinColumn(name = "locationdataid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private LocationData locationData;
+    @OneToOne( mappedBy = "user")
+    private Doctor doctor;
     @JoinColumn(name = "companyid", referencedColumnName = "id")
     @ManyToOne
     private Company company;
@@ -45,6 +50,9 @@ public class User {
             @JoinColumn(name = "idrole", referencedColumnName = "id")})
     @ManyToMany
     private List<Role> roleList;
+    @JsonIgnore
+    @OneToMany( mappedBy = "user")
+    private Collection<Itinerary> itineraryCollection;
 
     public User(long id) { this.id = id; }
 

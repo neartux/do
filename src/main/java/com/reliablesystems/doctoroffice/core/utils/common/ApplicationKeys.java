@@ -22,4 +22,7 @@ public final class ApplicationKeys {
     public static final Long ROLE_DOCTOR_ID = 4L;
     public static final String DATA_CURRENT_USER = "_DATA_CURRENT_USER";
     public static final String DATA_CURRENT_COMPANY = "_DATA_CURRENT_COMPANY";
+    public static final Long EVENT_TYPE_DATE=1L;
+    public static final Long EVENT_TYPE_ABSENCE=2L;
+    public static final Long EVENT_TYPE_BREAK=3L;
 }

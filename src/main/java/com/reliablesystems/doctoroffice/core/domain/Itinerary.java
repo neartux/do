@@ -8,54 +8,45 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Objects;
+import java.util.Date;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "state")
-public class State implements Serializable {
+@Table(name = "itinerary")
+public class Itinerary implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
-    @Column(name = "description")
-    private String description;
+    @JoinColumn(name = "doctorid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Doctor doctor;
     @JoinColumn(name = "statusid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Status status;
-    @JoinColumn(name = "countryid", referencedColumnName = "id")
+    @JoinColumn(name = "usercreateid", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Country country;
+    private User user;
+    @Column(name = "itinerarydate")
+    @Temporal(TemporalType.DATE)
+    private Date itineraryDate;
     @JsonIgnore
-    @OneToMany( mappedBy = "state")
-    private Collection<City> cityCollection;
+    @OneToMany(mappedBy = "itinerary")
+    private Collection<ItineraryDetail> itineraryDetailCollection;
 
-    public State(long id) { this.id = id; }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        State state = (State) o;
-        return Objects.equals(id, state.id);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id);
-    }
+    public Itinerary(long id) { this.id = id; }
 
     @Override
     public String toString() {
-        return "State{" +
+        return "Itinerary{" +
                 "id=" + id +
-                ", description='" + description + '\'' +
+                ", doctor=" + doctor +
                 ", status=" + status +
-                ", country=" + country +
+                ", user=" + user +
+                ", itineraryDate=" + itineraryDate +
                 '}';
     }
 }

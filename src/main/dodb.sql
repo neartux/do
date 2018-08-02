@@ -2831,3 +2831,50 @@ insert into usuario(statusid, personaldataid, locationdataid, username, password
 insert into roleuser (idrole, iduser) values (1, (select max(id) from usuario));
 insert into roleuser (idrole, iduser) values (2, (select max(id) from usuario));
 insert into roleuser (idrole, iduser) values (3, (select max(id) from usuario));
+
+create table eventtype (
+  id bigserial not null,
+  description character varying(20),
+  CONSTRAINT eventtype_pkey PRIMARY KEY (id)
+);
+insert into eventtype (id,description) values (1,'Citas');
+insert into eventtype (id,description) values (2,'Ausencia');
+insert into eventtype (id,description) values (3,'Receso');
+
+create table itinerary (
+  id bigserial not null,
+  doctorid bigint not null,
+  statusid bigint not null,
+  usercreateid bigint not null,
+  itinerarydate timestamp without time zone,
+  CONSTRAINT itinerary_pkey PRIMARY KEY (id),
+  CONSTRAINT itinerary_doctorid FOREIGN KEY (doctorid)
+  REFERENCES doctor (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT itinerary_statusid FOREIGN KEY (statusid)
+  REFERENCES status (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT itinerary_usercreate FOREIGN KEY (usercreateid)
+  REFERENCES usuario (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT
+);
+
+create table itinerarydetail (
+  id bigserial not null,
+  itineraryid bigint not null,
+  statusid bigint not null,
+  eventtypeid bigint not null,
+  itinerarydate timestamp without time zone,
+  startdate timestamp without time zone,
+  enddate timestamp without time zone,
+  CONSTRAINT itinerarydetail_pkey PRIMARY KEY (id),
+  CONSTRAINT itinerarydetail_doctorid FOREIGN KEY (itineraryid)
+  REFERENCES itinerary (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT itinerarydetail_statusid FOREIGN KEY (statusid)
+  REFERENCES status (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT itinerarydetail_usercreate FOREIGN KEY (eventtypeid)
+  REFERENCES eventtype (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT
+);

@@ -8,14 +8,13 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Objects;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "bloodtype")
-public class BloodType implements Serializable {
+@Table(name = "eventtype")
+public class EventType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,28 +23,14 @@ public class BloodType implements Serializable {
     @Column(name = "description")
     private String description;
     @JsonIgnore
-    @OneToMany( mappedBy = "bloodType")
-    private Collection<PersonalData> personalDataCollection;
+    @OneToMany(mappedBy = "eventType")
+    private Collection<ItineraryDetail> itineraryDetailCollection;
 
-    public BloodType(long id) { this.id = id; }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BloodType bloodType = (BloodType) o;
-        return Objects.equals(id, bloodType.id);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id);
-    }
+    public EventType(long id) { this.id = id; }
 
     @Override
     public String toString() {
-        return "BloodType{" +
+        return "EventType{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
                 '}';

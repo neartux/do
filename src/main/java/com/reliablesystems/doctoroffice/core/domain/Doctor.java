@@ -1,9 +1,12 @@
 package com.reliablesystems.doctoroffice.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
 
@@ -12,7 +15,8 @@ import java.util.Objects;
 @Setter
 @Entity
 @Table(name = "doctor")
-public class Doctor {
+public class Doctor implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
@@ -36,11 +40,14 @@ public class Doctor {
     @ManyToOne(optional = false)
     private LocationData locationData;
     @JoinColumn(name = "userid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false)
     private User user;
     @JoinColumn(name = "companyid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Company company;
+    @JsonIgnore
+    @OneToMany( mappedBy = "doctor")
+    private Collection<DoctorsOffice> doctorsOfficeCollection;
 
     public Doctor(long id) { this.id = id; }
 
