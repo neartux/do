@@ -21,9 +21,9 @@ public class Itinerary implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
-    @JoinColumn(name = "doctorid", referencedColumnName = "id")
+    @JoinColumn(name = "doctorsofficeid", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Doctor doctor;
+    private DoctorsOffice doctorsOffice;
     @JoinColumn(name = "statusid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Status status;
@@ -43,7 +43,7 @@ public class Itinerary implements Serializable {
     public String toString() {
         return "Itinerary{" +
                 "id=" + id +
-                ", doctor=" + doctor +
+                ", doctorsOffice=" + doctorsOffice +
                 ", status=" + status +
                 ", user=" + user +
                 ", itineraryDate=" + itineraryDate +

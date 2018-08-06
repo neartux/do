@@ -56,6 +56,17 @@ public class DoctorsOfficeServiceImpl implements DoctorsOfficeService {
     }
 
     /**
+     * Method to find all officces of a company
+     *
+     * @param companyId Company id
+     * @return List of {@link DoctorsOfficeTO}
+     */
+    @Override
+    public List<DoctorsOfficeTO> findDoctorsOfficesByCompany(long companyId) {
+        return doctorsOfficeDAO.findDoctorsOfficesByCompany(companyId);
+    }
+
+    /**
      * Method to get total of DoctorsOffice in the systems
      *
      * @param companyId Company that DoctorsOffice is

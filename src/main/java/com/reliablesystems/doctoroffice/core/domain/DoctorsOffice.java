@@ -1,11 +1,13 @@
 package com.reliablesystems.doctoroffice.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
 
@@ -29,11 +31,14 @@ public class DoctorsOffice implements Serializable {
     @ManyToOne(optional = false)
     private Status status;
     @JoinColumn(name = "doctorid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false)
     private Doctor doctor;
     @JoinColumn(name = "companyid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Company company;
+    @JsonIgnore
+    @OneToMany( mappedBy = "doctorsOffice")
+    private Collection<Itinerary> itineraryCollection;
 
     public DoctorsOffice(long id) { this.id = id; }
 

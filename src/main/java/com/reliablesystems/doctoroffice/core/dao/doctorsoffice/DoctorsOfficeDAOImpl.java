@@ -58,6 +58,32 @@ public class DoctorsOfficeDAOImpl implements DoctorsOfficeDAO {
     }
 
     /**
+     * Query to find all officces of a company
+     *
+     * @param companyId Company id
+     * @return List of {@link DoctorsOfficeTO}
+     */
+    @Override
+    public List<DoctorsOfficeTO> findDoctorsOfficesByCompany(long companyId) {
+        String sql = "select doctorsoffice.id,doctorsoffice.doctorid,doctorsoffice.description,doctor.profileimage,doctor.professionalcard," +
+                " personaldata.firstname,personaldata.lastname,personaldata.sex,personaldata.birthdate," +
+                " locationdata.address,locationdata.zipcode,locationdata.cellphone,locationdata.phone,locationdata.email" +
+                " from doctorsoffice" +
+                " inner join doctor on doctorsoffice.doctorid = doctor.id" +
+                " inner join personaldata on doctor.personaldataid = personaldata.id" +
+                " inner join locationdata on doctor.locationdataid = locationdata.id" +
+                " where doctorsoffice.companyid = ?" +
+                " and doctorsoffice.statusid = " + StatusKeys.ACTIVE_STATUS +
+                " order by doctorsoffice.description";
+
+        try {
+            return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(DoctorsOfficeTO.class), companyId);
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<>();
+        }
+    }
+
+    /**
      * Query to get total of doctorsoffices in the systems
      *
      * @param companyId Company that doctorsoffices is

@@ -2843,13 +2843,13 @@ insert into eventtype (id,description) values (3,'Receso');
 
 create table itinerary (
   id bigserial not null,
-  doctorid bigint not null,
+  doctorsofficeid bigint not null,
   statusid bigint not null,
   usercreateid bigint not null,
   itinerarydate timestamp without time zone,
   CONSTRAINT itinerary_pkey PRIMARY KEY (id),
-  CONSTRAINT itinerary_doctorid FOREIGN KEY (doctorid)
-  REFERENCES doctor (id) MATCH SIMPLE
+  CONSTRAINT itinerary_doctorsofficeid FOREIGN KEY (doctorsofficeid)
+  REFERENCES doctorsoffice (id) MATCH SIMPLE
   ON UPDATE RESTRICT ON DELETE RESTRICT,
   CONSTRAINT itinerary_statusid FOREIGN KEY (statusid)
   REFERENCES status (id) MATCH SIMPLE

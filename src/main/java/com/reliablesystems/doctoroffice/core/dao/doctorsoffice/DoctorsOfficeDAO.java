@@ -7,5 +7,7 @@ import java.util.List;
 public interface DoctorsOfficeDAO {
     List<DoctorsOfficeTO> findDoctorsOfficesByCompany(long companyId, int ofset, int limit, String search);
 
+    List<DoctorsOfficeTO> findDoctorsOfficesByCompany(long companyId);
+
     int findDoctorsOfficesCountByCompany(long companyId, String search);
 }
