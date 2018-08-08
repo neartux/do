@@ -37,10 +37,11 @@ public class DoctorDAOImpl implements DoctorDAO {
     public List<DoctorTO> findDoctorsByCompany(long companyId, int ofset, int limit, String search) {
         String sql = "select doctor.id,doctor.personaldataid,doctor.locationdataid,doctor.professionalcard,doctor.profileimage," +
                 " personaldata.firstname,personaldata.lastname,personaldata.birthdate,personaldata.sex," +
-                " locationdata.address,locationdata.zipcode,locationdata.phone,locationdata.cellphone,locationdata.email" +
+                " locationdata.address,locationdata.zipcode,locationdata.phone,locationdata.cellphone,locationdata.email,usuario.username" +
                 " from doctor" +
                 " inner join personaldata on doctor.personaldataid = personaldata.id" +
                 " inner join locationdata on doctor.locationdataid = locationdata.id" +
+                " left join usuario on doctor.userid = usuario.id" +
                 " where doctor.companyid = ?" +
                 " and doctor.statusid = " + StatusKeys.ACTIVE_STATUS;
         if(search != null && !search.isEmpty()) {

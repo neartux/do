@@ -11,8 +11,10 @@ public final class ApplicationKeys {
     public static final String PATH_AVATAR_SERVER_IMAGE = System.getProperty("user.dir") + "/../standalone/files/images/no-avatar.png";
     public static final String[] ARRAY_AVAILABLE_IMAGES_PROFILE = {"jpg", "jpeg", "png"};
     public static final String FOLDER_FILES = "files";
+    public static final String FOLDER_PATIENTS = "patients";
     public static final String FOLDER_PATIENT = "patient-";
     public static final String FOLDER_DOCTOR = "doctor-";
+    public static final String FOLDER_DOCTORS = "doctors";
     public static final Long MAX_SIZE_FILE = 100000L;
     public static final String FOLDER_PATIENT_PROFILE_PICTURE = "profilepicture";
     public static final String FOLDER_DOCTOR_PROFILE_PICTURE = "profilepicture";
