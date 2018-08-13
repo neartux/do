@@ -1,6 +1,6 @@
 package com.reliablesystems.doctoroffice.core.service.itinerary;
 
-import com.reliablesystems.doctoroffice.core.dao.itinerary.ItineraryDAOImpl;
+import com.reliablesystems.doctoroffice.core.dao.itinerary.ItineraryDAO;
 import com.reliablesystems.doctoroffice.core.exception.BackEndException;
 import com.reliablesystems.doctoroffice.core.manager.itinerary.ItineraryManager;
 import com.reliablesystems.doctoroffice.core.repository.ItineraryRepository;
@@ -20,7 +20,7 @@ public class ItineraryServiceImpl implements ItineraryService {
     @Autowired
     private ItineraryRepository itineraryRepository;
     @Autowired
-    private ItineraryDAOImpl itineraryDAO;
+    private ItineraryDAO itineraryDAO;
 
     /**
      * Method to find a itinerary of a office by id and date

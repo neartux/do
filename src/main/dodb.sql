@@ -2827,7 +2827,8 @@ insert into bloodtype (description) values ('AB-');
 
 insert into personaldata (bloodtypeid, firstname, lastname, sex) values (1,'Ricardo','Dzul', 'MALE');
 insert into locationdata (address, cellphone) values ('Merida Yuc.', '9993599516');
-insert into usuario(statusid, personaldataid, locationdataid, username, password) values (1, (select max(id) from personaldata), (select max(id) from locationdata), 'admin', md5('demo'));
+insert into company (statusid,personaldataid,locationdataid,description,createdat) values (1,(select max(id) from personaldata),(select max(id) from locationdata),'Default Company',now());
+insert into usuario(statusid, personaldataid, locationdataid, companyid, username, password) values (1, (select max(id) from personaldata), (select max(id) from locationdata), 1, 'admin', md5('demo'));
 insert into roleuser (idrole, iduser) values (1, (select max(id) from usuario));
 insert into roleuser (idrole, iduser) values (2, (select max(id) from usuario));
 insert into roleuser (idrole, iduser) values (3, (select max(id) from usuario));

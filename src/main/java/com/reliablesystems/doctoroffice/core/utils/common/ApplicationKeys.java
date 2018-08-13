@@ -27,4 +27,5 @@ public final class ApplicationKeys {
     public static final Long EVENT_TYPE_DATE=1L;
     public static final Long EVENT_TYPE_ABSENCE=2L;
     public static final Long EVENT_TYPE_BREAK=3L;
+    public static final Integer RANGE_BEETWEN_DATE = 15;
 }

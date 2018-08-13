@@ -46,8 +46,8 @@ public class Doctor implements Serializable {
     @ManyToOne(optional = false)
     private Company company;
     @JsonIgnore
-    @OneToOne( mappedBy = "doctor")
-    private DoctorsOffice doctorsOffice;
+    @OneToMany(mappedBy = "doctor")
+    private Collection<DoctorsOffice> doctorsOfficeCollection;
 
     public Doctor(long id) { this.id = id; }
 

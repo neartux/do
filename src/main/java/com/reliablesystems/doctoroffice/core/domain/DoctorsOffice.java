@@ -31,7 +31,7 @@ public class DoctorsOffice implements Serializable {
     @ManyToOne(optional = false)
     private Status status;
     @JoinColumn(name = "doctorid", referencedColumnName = "id")
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     private Doctor doctor;
     @JoinColumn(name = "companyid", referencedColumnName = "id")
     @ManyToOne(optional = false)

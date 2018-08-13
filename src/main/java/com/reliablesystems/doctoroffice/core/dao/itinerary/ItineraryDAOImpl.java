@@ -25,11 +25,12 @@ public class ItineraryDAOImpl implements ItineraryDAO {
     }
 
     /**
+     * Query to find itineerary by doctorsoffice
      *
-     * @param doctorOfficeId
-     * @param startDate
-     * @param endDate
-     * @return
+     * @param doctorOfficeId Dodctorsofficeid
+     * @param startDate Start period
+     * @param endDate End Perior
+     * @return List itinerary
      */
     @Override
     public List<ItineraryDetailTO> findItineraryByDoctorsOfficeAndDate(long doctorOfficeId, Date startDate, Date endDate) {
