@@ -35,6 +35,7 @@ public class PatientTO {
     private Long cityId;
     private String city;
     private Long companyId;
+    private String pattern;
 
     @Override
     public String toString() {
@@ -60,6 +61,7 @@ public class PatientTO {
                 ", email='" + email + '\'' +
                 ", cityId=" + cityId +
                 ", city='" + city + '\'' +
+                ", pattern='" + pattern + '\'' +
                 '}';
     }
 }

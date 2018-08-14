@@ -31,6 +31,7 @@ public class DoctorTO {
     private Long userId;
     private String userName;
     private String password;
+    private String pattern;
 
     @Override
     public String toString() {
@@ -49,6 +50,7 @@ public class DoctorTO {
                 ", phone='" + phone + '\'' +
                 ", cellPhone='" + cellPhone + '\'' +
                 ", email='" + email + '\'' +
+                ", pattern='" + pattern + '\'' +
                 '}';
     }
 }

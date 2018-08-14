@@ -21,7 +21,7 @@ public final class PatientUtil {
         PersonalData personalData = new PersonalData();
         personalData.setFirstName(patientTO.getFirstName());
         personalData.setLastName(patientTO.getLastName());
-        personalData.setBirthDate(DateUtil.stringToDate(patientTO.getBirthDateS(), ApplicationKeys.DEFAULT_PATERN));
+        personalData.setBirthDate(DateUtil.stringToDate(patientTO.getBirthDateS(), patientTO.getPattern()));
         personalData.setBloodType(new BloodType(patientTO.getBloodTypeId()));
         personalData.setCivilStatus(patientTO.getCivilStatus());
         personalData.setSex(patientTO.getSex());
@@ -49,7 +49,7 @@ public final class PatientUtil {
     public static void updatePatientData(PatientTO patientTO, Patient patient) {
         patient.getPersonalData().setFirstName(patientTO.getFirstName());
         patient.getPersonalData().setLastName(patientTO.getLastName());
-        patient.getPersonalData().setBirthDate(DateUtil.stringToDate(patientTO.getBirthDateS(), ApplicationKeys.DEFAULT_PATERN));
+        patient.getPersonalData().setBirthDate(DateUtil.stringToDate(patientTO.getBirthDateS(), patientTO.getPattern()));
         patient.getPersonalData().setBloodType(new BloodType(patientTO.getBloodTypeId()));
         patient.getPersonalData().setCivilStatus(patientTO.getCivilStatus());
         patient.getPersonalData().setSex(patientTO.getSex());

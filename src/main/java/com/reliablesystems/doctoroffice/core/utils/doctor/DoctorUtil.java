@@ -18,7 +18,7 @@ public final class DoctorUtil {
         PersonalData personalData = new PersonalData();
         personalData.setFirstName(doctorTO.getFirstName());
         personalData.setLastName(doctorTO.getLastName());
-        personalData.setBirthDate(DateUtil.stringToDate(doctorTO.getBirthDateS(), ApplicationKeys.DEFAULT_PATERN));
+        personalData.setBirthDate(DateUtil.stringToDate(doctorTO.getBirthDateS(), doctorTO.getPattern()));
         personalData.setSex(doctorTO.getSex());
 
         LocationData locationData = new LocationData();
@@ -46,7 +46,7 @@ public final class DoctorUtil {
     public static void updateDoctorData(DoctorTO doctorTO, Doctor doctor) {
         doctor.getPersonalData().setFirstName(doctorTO.getFirstName());
         doctor.getPersonalData().setLastName(doctorTO.getLastName());
-        doctor.getPersonalData().setBirthDate(DateUtil.stringToDate(doctorTO.getBirthDateS(), ApplicationKeys.DEFAULT_PATERN));
+        doctor.getPersonalData().setBirthDate(DateUtil.stringToDate(doctorTO.getBirthDateS(), doctorTO.getPattern()));
         doctor.getPersonalData().setSex(doctorTO.getSex());
 
         doctor.getLocationData().setAddress(doctorTO.getAddress());
