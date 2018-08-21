@@ -47,6 +47,9 @@ public class PersonalData implements Serializable {
     @JsonIgnore
     @OneToMany( mappedBy = "personalData")
     private Collection<Patient> patientCollection;
+    @JsonIgnore
+    @OneToMany( mappedBy = "personalData")
+    private Collection<MedicalAppointmentHistory> medicalAppointmentHistoryCollection;
 
     public PersonalData(long id) { this.id = id; }
 

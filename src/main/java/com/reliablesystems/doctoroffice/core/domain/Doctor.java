@@ -48,6 +48,12 @@ public class Doctor implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "doctor")
     private Collection<DoctorsOffice> doctorsOfficeCollection;
+    @JsonIgnore
+    @OneToMany(mappedBy = "doctor")
+    private Collection<MedicalAppointment> medicalAppointmentCollection;
+    @JsonIgnore
+    @OneToMany( mappedBy = "doctor")
+    private Collection<MedicalAppointmentHistory> medicalAppointmentHistoryCollection;
 
     public Doctor(long id) { this.id = id; }
 

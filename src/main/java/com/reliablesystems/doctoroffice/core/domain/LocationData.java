@@ -43,6 +43,9 @@ public class LocationData implements Serializable {
     @JsonIgnore
     @OneToMany( mappedBy = "locationData")
     private Collection<Patient> patientCollection;
+    @JsonIgnore
+    @OneToMany( mappedBy = "locationData")
+    private Collection<MedicalAppointmentHistory> medicalAppointmentHistoryCollection;
 
     public LocationData(long id) { this.id = id; }
 

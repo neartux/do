@@ -2879,3 +2879,115 @@ create table itinerarydetail (
   REFERENCES eventtype (id) MATCH SIMPLE
   ON UPDATE RESTRICT ON DELETE RESTRICT
 );
+
+create table vitalsigns (
+  id bigserial not null,
+  patientid bigint not null,
+  statusid bigint not null,
+  weight character varying(50),
+  temperature character varying(50),
+  size character varying(50),
+  bloodpressure1 character varying(50),
+  bloodpressure2 character varying(50),
+  heartfrecuency character varying(50),
+  breatingfrecuency character varying(50),
+  CONSTRAINT vitalsigns_pkey PRIMARY KEY (id),
+  CONSTRAINT vitalsigns_doctorsofficeid FOREIGN KEY (patientid)
+  REFERENCES patient (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT vitalsigns_statusid FOREIGN KEY (statusid)
+  REFERENCES status (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT
+);
+
+create table medicalappointment (
+  id bigserial not null,
+  patientid bigint not null,
+  statusid bigint not null,
+  doctorsofficeid bigint not null,
+  doctorid bigint,
+  userid bigint not null,
+  vitalsignsid bigint not null,
+  startdate timestamp without time zone,
+  enddate timestamp without time zone,
+  createdat timestamp without time zone,
+  type character varying(50),
+  viarequest character varying (100),
+  CONSTRAINT medicalappointment_pkey PRIMARY KEY (id),
+  CONSTRAINT medicalappointment_patientid FOREIGN KEY (patientid)
+  REFERENCES patient (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT medicalappointment_statusid FOREIGN KEY (statusid)
+  REFERENCES status (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT medicalappointment_doctorsofficeid FOREIGN KEY (doctorsofficeid)
+  REFERENCES doctorsoffice (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT medicalappointment_doctorid FOREIGN KEY (doctorid)
+  REFERENCES doctor (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT medicalappointment_userid FOREIGN KEY (userid)
+  REFERENCES usuario (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT medicalappointment_vitalsignsid FOREIGN KEY (vitalsignsid)
+  REFERENCES vitalsigns (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT
+);
+
+comment on column medicalappointment.type is 'First Time Or Subsecuent';
+comment on column medicalappointment.viarequest is 'Personal,Phone,Email';
+comment on column medicalappointment.doctorsofficeid is 'Consultorio Atiende';
+comment on column medicalappointment.doctorid is 'Doctor que atendio';
+comment on column medicalappointment.userid is 'Usuario que agendo';
+
+create table medicalappointmenthistory (
+  id bigserial not null,
+  medicalappointmentid bigint not null,
+  patientid bigint not null,
+  personaldataid bigint not null,
+  locationdataid bigint not null,
+  statusid bigint not null,
+  doctorsofficeid bigint not null,
+  doctorid bigint,
+  userid bigint not null,
+  vitalsignsid bigint not null,
+  startdate timestamp without time zone,
+  enddate timestamp without time zone,
+  createdat timestamp without time zone,
+  type character varying(50),
+  viarequest character varying (100),
+  CONSTRAINT medicalappointmenthistory_pkey PRIMARY KEY (id),
+  CONSTRAINT medicalappointmenthistory_medicalappointmentid FOREIGN KEY (medicalappointmentid)
+  REFERENCES medicalappointment (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT medicalappointmenthistory_patientid FOREIGN KEY (patientid)
+  REFERENCES patient (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT medicalappointmenthistory_personaldataid FOREIGN KEY (personaldataid)
+  REFERENCES personaldata (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT medicalappointmenthistory_locationdataid FOREIGN KEY (locationdataid)
+  REFERENCES locationdata (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT medicalappointmenthistory_statusid FOREIGN KEY (statusid)
+  REFERENCES status (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT medicalappointmenthistory_doctorsofficeid FOREIGN KEY (doctorsofficeid)
+  REFERENCES doctorsoffice (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT medicalappointmenthistory_doctorid FOREIGN KEY (doctorid)
+  REFERENCES doctor (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT medicalappointmenthistory_userid FOREIGN KEY (userid)
+  REFERENCES usuario (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT medicalappointmenthistory_vitalsignsid FOREIGN KEY (vitalsignsid)
+  REFERENCES vitalsigns (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT
+);
+
+comment on column medicalappointmenthistory.type is 'First Time Or Subsecuent';
+comment on column medicalappointmenthistory.viarequest is 'Personal,Phone,Email';
+comment on column medicalappointmenthistory.doctorsofficeid is 'Consultorio Atiende';
+comment on column medicalappointmenthistory.doctorid is 'Doctor que atendio';
+comment on column medicalappointmenthistory.userid is 'Usuario que agendo';

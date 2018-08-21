@@ -53,6 +53,12 @@ public class User implements Serializable {
     @JsonIgnore
     @OneToMany( mappedBy = "user")
     private Collection<Itinerary> itineraryCollection;
+    @JsonIgnore
+    @OneToMany( mappedBy = "user")
+    private Collection<MedicalAppointment> medicalAppointmentCollection;
+    @JsonIgnore
+    @OneToMany( mappedBy = "user")
+    private Collection<MedicalAppointmentHistory> medicalAppointmentHistoryCollection;
 
     public User(long id) { this.id = id; }
 

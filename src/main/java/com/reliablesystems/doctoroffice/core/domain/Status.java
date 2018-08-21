@@ -59,6 +59,15 @@ public class Status implements Serializable {
     @JsonIgnore
     @OneToMany( mappedBy = "status")
     private Collection<ItineraryDetail> itineraryDetailCollection;
+    @JsonIgnore
+    @OneToMany( mappedBy = "status")
+    private Collection<VitalSigns> vitalSignsCollection;
+    @JsonIgnore
+    @OneToMany( mappedBy = "status")
+    private Collection<MedicalAppointment> medicalAppointmentCollection;
+    @JsonIgnore
+    @OneToMany( mappedBy = "status")
+    private Collection<MedicalAppointmentHistory> medicalAppointmentHistoryCollection;
 
     public Status(long id) {
         this.id = id;
