@@ -46,7 +46,7 @@ public class MedicalAppointment implements Serializable {
     @Column(name = "enddate")
     @Temporal(TemporalType.DATE)
     private Date endDate;
-    @Column(name = "enddate")
+    @Column(name = "createdat")
     @Temporal(TemporalType.DATE)
     private Date createdAt;
     @Column(name = "type")
