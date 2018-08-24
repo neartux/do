@@ -53,6 +53,8 @@ public class MedicalAppointment implements Serializable {
     private String type;
     @Column(name = "viarequest")
     private String viarequest;
+    @Column(name = "reason")
+    private String reason;
     @JsonIgnore
     @OneToMany( mappedBy = "medicalAppointment")
     private Collection<MedicalAppointmentHistory> medicalAppointmentHistoryCollection;

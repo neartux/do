@@ -2913,6 +2913,7 @@ create table medicalappointment (
   createdat timestamp without time zone,
   type character varying(50),
   viarequest character varying (100),
+  reason character varying(255),
   CONSTRAINT medicalappointment_pkey PRIMARY KEY (id),
   CONSTRAINT medicalappointment_patientid FOREIGN KEY (patientid)
   REFERENCES patient (id) MATCH SIMPLE
@@ -2956,6 +2957,7 @@ create table medicalappointmenthistory (
   createdat timestamp without time zone,
   type character varying(50),
   viarequest character varying (100),
+  reason character varying(255),
   CONSTRAINT medicalappointmenthistory_pkey PRIMARY KEY (id),
   CONSTRAINT medicalappointmenthistory_medicalappointmentid FOREIGN KEY (medicalappointmentid)
   REFERENCES medicalappointment (id) MATCH SIMPLE
@@ -2991,3 +2993,10 @@ comment on column medicalappointmenthistory.viarequest is 'Personal,Phone,Email'
 comment on column medicalappointmenthistory.doctorsofficeid is 'Consultorio Atiende';
 comment on column medicalappointmenthistory.doctorid is 'Doctor que atendio';
 comment on column medicalappointmenthistory.userid is 'Usuario que agendo';
+
+insert into status (id, description) values (3, 'Start');
+insert into status (id, description) values (4, 'Finalize');
+insert into status (id, description) values (5, 'Scheduled');
+insert into status (id, description) values (6, 'Confirmed');
+insert into status (id, description) values (7, 'Waiting Room');
+insert into status (id, description) values (8, 'Pay');

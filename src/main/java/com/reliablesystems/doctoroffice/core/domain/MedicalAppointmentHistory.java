@@ -60,6 +60,8 @@ public class MedicalAppointmentHistory implements Serializable {
     private String type;
     @Column(name = "viarequest")
     private String viarequest;
+    @Column(name = "reason")
+    private String reason;
 
     public MedicalAppointmentHistory(Long id) {
         this.id = id;
