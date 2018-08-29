@@ -1,5 +1,6 @@
 package com.reliablesystems.doctoroffice.core.service.medicalappointment;
 
+import com.reliablesystems.doctoroffice.core.dao.medicalappointment.MedicalAppointmentHistoryDAO;
 import com.reliablesystems.doctoroffice.core.domain.LocationData;
 import com.reliablesystems.doctoroffice.core.domain.MedicalAppointment;
 import com.reliablesystems.doctoroffice.core.domain.MedicalAppointmentHistory;
@@ -8,11 +9,14 @@ import com.reliablesystems.doctoroffice.core.exception.BackEndException;
 import com.reliablesystems.doctoroffice.core.repository.LocationDataRepository;
 import com.reliablesystems.doctoroffice.core.repository.MedicalAppointmentHistoryRepository;
 import com.reliablesystems.doctoroffice.core.repository.PersonalDataRepository;
+import com.reliablesystems.doctoroffice.core.to.medicalappointment.MedicalAppointmentHistoryTO;
 import com.reliablesystems.doctoroffice.core.utils.common.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(value = "doTransactionManager", propagation = Propagation.REQUIRED, rollbackFor = BackEndException.class)
@@ -23,6 +27,19 @@ public class MedicalAppointmentHistoryServiceImpl implements MedicalAppointmentH
     private PersonalDataRepository personalDataRepository;
     @Autowired
     private LocationDataRepository locationDataRepository;
+    @Autowired
+    private MedicalAppointmentHistoryDAO medicalAppointmentHistoryDAO;
+
+    /**
+     * Method to find history to a patient
+     *
+     * @param patientId Patient id
+     * @return List of history
+     */
+    @Override
+    public List<MedicalAppointmentHistoryTO> findHistoryByPatientId(Long patientId) {
+        return medicalAppointmentHistoryDAO.findHistoryByPatientId(patientId);
+    }
 
     /**
      * Method to create a {@link MedicalAppointmentHistory}
