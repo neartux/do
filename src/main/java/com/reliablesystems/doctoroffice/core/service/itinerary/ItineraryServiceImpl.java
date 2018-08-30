@@ -25,6 +25,8 @@ public class ItineraryServiceImpl implements ItineraryService {
     private ItineraryRepository itineraryRepository;
     @Autowired
     private ItineraryDAO itineraryDAO;
+    @Autowired
+    private ItineraryDetailService itineraryDetailService;
 
     public long createItinerary(ItineraryTO itineraryTO, long userId) {
         // Find itinerary
@@ -33,8 +35,19 @@ public class ItineraryServiceImpl implements ItineraryService {
             itinerary = create(itineraryTO.getDoctorOfficeId(), userId);
         }
         itineraryTO.setItineraryId(itinerary.getId());
+        // Create details itinerary TODO pendiente
+
+        return itinerary.getId();
+
     }
 
+    /**
+     * Method to create a itinerary head
+     *
+     * @param doctorOfficeId Office doctor
+     * @param userId User created
+     * @return Itinerary created
+     */
     private Itinerary create(long doctorOfficeId, long userId) {
         Itinerary itinerary = new Itinerary();
         itinerary.setDoctorsOffice(new DoctorsOffice(doctorOfficeId));
