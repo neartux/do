@@ -1,11 +1,15 @@
 package com.reliablesystems.doctoroffice.core.service.itinerary;
 
 import com.reliablesystems.doctoroffice.core.dao.itinerary.ItineraryDAO;
+import com.reliablesystems.doctoroffice.core.domain.DoctorsOffice;
+import com.reliablesystems.doctoroffice.core.domain.Itinerary;
+import com.reliablesystems.doctoroffice.core.domain.Status;
+import com.reliablesystems.doctoroffice.core.domain.User;
 import com.reliablesystems.doctoroffice.core.exception.BackEndException;
-import com.reliablesystems.doctoroffice.core.manager.itinerary.ItineraryManager;
 import com.reliablesystems.doctoroffice.core.repository.ItineraryRepository;
-import com.reliablesystems.doctoroffice.core.to.itinerary.ItineraryDetailTO;
 import com.reliablesystems.doctoroffice.core.to.itinerary.ItineraryTO;
+import com.reliablesystems.doctoroffice.core.utils.common.DateUtil;
+import com.reliablesystems.doctoroffice.core.utils.common.StatusKeys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -22,6 +26,25 @@ public class ItineraryServiceImpl implements ItineraryService {
     @Autowired
     private ItineraryDAO itineraryDAO;
 
+    public long createItinerary(ItineraryTO itineraryTO, long userId) {
+        // Find itinerary
+        Itinerary itinerary = itineraryRepository.findByDoctorsOfficeIdAndStatusId(itineraryTO.getDoctorOfficeId(), StatusKeys.ACTIVE_STATUS);
+        if (itinerary == null) {
+            itinerary = create(itineraryTO.getDoctorOfficeId(), userId);
+        }
+        itineraryTO.setItineraryId(itinerary.getId());
+    }
+
+    private Itinerary create(long doctorOfficeId, long userId) {
+        Itinerary itinerary = new Itinerary();
+        itinerary.setDoctorsOffice(new DoctorsOffice(doctorOfficeId));
+        itinerary.setUser(new User(userId));
+        itinerary.setStatus(new Status(StatusKeys.ACTIVE_STATUS));
+        itinerary.setCreatedAt(DateUtil.now());
+        itineraryRepository.save(itinerary);
+        return itinerary;
+    }
+
     /**
      * Method to find a itinerary of a office by id and date
      *
@@ -31,12 +54,7 @@ public class ItineraryServiceImpl implements ItineraryService {
      * @return Itinerary
      */
     @Override
-    public ItineraryTO findItineraryByOfficeAndDate(long doctorsOfficeId, Date startDate, Date endDate) {
-        List<ItineraryDetailTO> list = itineraryDAO.findItineraryByDoctorsOfficeAndDate(doctorsOfficeId, startDate, endDate);
-        System.out.println("list.size() = " + list.size());
-        ItineraryManager itineraryManager = new ItineraryManager();
-        itineraryManager.setItineraryDetailTOList(list);
-        itineraryManager.process();
-        return itineraryManager.getResult();
+    public List<ItineraryTO> findItineraryByOfficeAndDate(long doctorsOfficeId, Date startDate, Date endDate) {
+        return itineraryDAO.findItineraryByDoctorsOfficeAndDate(doctorsOfficeId, startDate, endDate);
     }
 }

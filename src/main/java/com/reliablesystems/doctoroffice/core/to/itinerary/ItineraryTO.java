@@ -17,7 +17,20 @@ public class ItineraryTO {
     private Long id;
     private DoctorTO doctorTO;
     private Date itineraryDate;
-    private List<ItineraryDetailTO> itineraryDetailTOList;
+    private Long detailId;
+    private Long itineraryId;
+    private Long eventTypeId;
+    private String eventType;
+    private Date startsAt;
+    private Date endsAt;
+    private boolean draggable;
+    private boolean resizable;
+    private boolean incrementsBadgeTotal;
+    private String actions;
+    private String color;
+    private String title;
+    private String type; //info, success, warning, danger
+    private Long doctorOfficeId;
 
     @Override
     public String toString() {
@@ -25,7 +38,20 @@ public class ItineraryTO {
                 "id=" + id +
                 ", doctorTO=" + doctorTO +
                 ", itineraryDate=" + itineraryDate +
-                ", itineraryDetailTOList=" + itineraryDetailTOList +
+                ", detailId=" + detailId +
+                ", itineraryId=" + itineraryId +
+                ", eventTypeId=" + eventTypeId +
+                ", eventType='" + eventType + '\'' +
+                ", startsAt=" + startsAt +
+                ", endsAt=" + endsAt +
+                ", draggable=" + draggable +
+                ", resizable=" + resizable +
+                ", incrementsBadgeTotal=" + incrementsBadgeTotal +
+                ", actions='" + actions + '\'' +
+                ", color='" + color + '\'' +
+                ", title='" + title + '\'' +
+                ", type='" + type + '\'' +
+                ", doctorOfficeId=" + doctorOfficeId +
                 '}';
     }
 }

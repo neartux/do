@@ -34,6 +34,9 @@ public class ItineraryDetail implements Serializable {
     @Column(name = "enddate")
     @Temporal(TemporalType.DATE)
     private Date endDate;
+    @Column(name = "createdat")
+    @Temporal(TemporalType.DATE)
+    private Date createdAt;
 
     public ItineraryDetail(long id) { this.id = id; }
 
@@ -46,6 +49,7 @@ public class ItineraryDetail implements Serializable {
                 ", eventType=" + eventType +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+                ", createdat=" + createdAt +
                 '}';
     }
 }

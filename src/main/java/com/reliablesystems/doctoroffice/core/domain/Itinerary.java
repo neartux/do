@@ -30,9 +30,9 @@ public class Itinerary implements Serializable {
     @JoinColumn(name = "usercreateid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User user;
-    @Column(name = "itinerarydate")
+    @Column(name = "createdat")
     @Temporal(TemporalType.DATE)
-    private Date itineraryDate;
+    private Date createdAt;
     @JsonIgnore
     @OneToMany(mappedBy = "itinerary")
     private Collection<ItineraryDetail> itineraryDetailCollection;
@@ -46,7 +46,7 @@ public class Itinerary implements Serializable {
                 ", doctorsOffice=" + doctorsOffice +
                 ", status=" + status +
                 ", user=" + user +
-                ", itineraryDate=" + itineraryDate +
+                ", createdAt=" + createdAt +
                 '}';
     }
 }

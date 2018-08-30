@@ -2847,7 +2847,7 @@ create table itinerary (
   doctorsofficeid bigint not null,
   statusid bigint not null,
   usercreateid bigint not null,
-  itinerarydate timestamp without time zone,
+  createdat timestamp without time zone,
   CONSTRAINT itinerary_pkey PRIMARY KEY (id),
   CONSTRAINT itinerary_doctorsofficeid FOREIGN KEY (doctorsofficeid)
   REFERENCES doctorsoffice (id) MATCH SIMPLE
@@ -2865,7 +2865,7 @@ create table itinerarydetail (
   itineraryid bigint not null,
   statusid bigint not null,
   eventtypeid bigint not null,
-  itinerarydate timestamp without time zone,
+  createdat timestamp without time zone,
   startdate timestamp without time zone,
   enddate timestamp without time zone,
   CONSTRAINT itinerarydetail_pkey PRIMARY KEY (id),
