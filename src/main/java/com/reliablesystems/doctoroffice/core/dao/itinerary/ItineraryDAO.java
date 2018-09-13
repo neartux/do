@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ItineraryDAO {
     List<ItineraryTO> findItineraryByDoctorsOfficeAndDate(long doctorOfficeId, Date startDate, Date endDate);
+
+    Boolean isItineraryTimeAvailable(Long itineraryId, Date startDate, Date endDate);
 }

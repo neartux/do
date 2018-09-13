@@ -19,6 +19,7 @@ public class ItineraryTO {
     private Date itineraryDate;
     private Long detailId;
     private Long itineraryId;
+    private Long itineraryDetailId;
     private Long eventTypeId;
     private String eventType;
     private Date startsAt;

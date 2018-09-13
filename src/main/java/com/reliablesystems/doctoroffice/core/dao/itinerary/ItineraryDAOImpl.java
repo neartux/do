@@ -1,6 +1,7 @@
 package com.reliablesystems.doctoroffice.core.dao.itinerary;
 
 import com.reliablesystems.doctoroffice.core.to.itinerary.ItineraryTO;
+import com.reliablesystems.doctoroffice.core.utils.common.NumberUtil;
 import com.reliablesystems.doctoroffice.core.utils.common.StatusKeys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,22 +33,43 @@ public class ItineraryDAOImpl implements ItineraryDAO {
      * @param endDate End Perior
      * @return List itinerary
      */
-    @Override // TODO esta mal, no debe ser asi el query, debe ser por detalle no por itinerario y al fecha de coparacion tambien esta mal
+    @Override
     public List<ItineraryTO> findItineraryByDoctorsOfficeAndDate(long doctorOfficeId, Date startDate, Date endDate) {
         String sql = "select itinerary.id as itineraryid,itinerary.itinerarydate,itinerarydetail.id as detailid,eventtype.id as eventTypeid,eventtype.description as title," +
-                " itinerarydetail.startdate as startsAt,itinerarydetail.enddate as endsAt" +
-                " from itinerary" +
-                " left join itinerarydetail on itinerary.id = itinerarydetail.itineraryid and itinerarydetail.statusid = " + StatusKeys.ACTIVE_STATUS +
-                " left join eventtype on itinerarydetail.eventtypeid = eventtype.id" +
-                " where itinerary.doctorsofficeid = ?" +
-                " and itinerary.itinerarydate between ? and ?" +
-                " and itinerary.statusid = " + StatusKeys.ACTIVE_STATUS +
-                " order by itinerarydetail.startdate";
+                "itinerarydetail.startdate as startsAt,itinerarydetail.enddate as endsAt" +
+                "from itinerary" +
+                "left join itinerarydetail on itinerary.id = itinerarydetail.itineraryid" +
+                "left join eventtype on itinerarydetail.eventtypeid = eventtype.id" +
+                "where itinerary.doctorid in (?)" + // In, maybe many doctors ids
+                "and itinerary.statusid = " + StatusKeys.ACTIVE_STATUS +
+                "and itinerarydetail.startdate between ? and ?" +
+                "and itinerarydetail.statusid = " + StatusKeys.ACTIVE_STATUS +
+                "order by itinerarydetail.startdate";
 
         try {
             return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(ItineraryTO.class), doctorOfficeId, startDate, endDate);
         } catch (EmptyResultDataAccessException e) {
             return new ArrayList<>();
         }
+    }
+
+    /**
+     * Query to verify if a itinerary date is available
+     *
+     * @param itineraryId Itinerary id
+     * @param startDate Start date of period
+     * @param endDate End date of period
+     * @return Boolean with the result
+     */
+    @Override
+    public Boolean isItineraryTimeAvailable(Long itineraryId, Date startDate, Date endDate) {
+        String sql = "select count(*) = " + NumberUtil.ZERO_INT + " as available" +
+                " from itinerarydetail" +
+                " where itinerarydetail.itineraryid = ?" +
+                " and itinerarydetail.statusid = " + StatusKeys.ACTIVE_STATUS +
+                " and (? between itinerarydetail.startdate and itinerarydetail.enddate" +
+                " or ? between itinerarydetail.startdate and itinerarydetail.enddate)";
+
+        return jdbcTemplate.queryForObject(sql, Boolean.class, itineraryId, startDate, endDate);
     }
 }
