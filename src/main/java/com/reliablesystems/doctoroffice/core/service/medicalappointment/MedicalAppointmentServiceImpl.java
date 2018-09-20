@@ -160,6 +160,7 @@ public class MedicalAppointmentServiceImpl implements MedicalAppointmentService 
         if (ma == null) {
             throw new BackEndException("Medical Appointment With Id: " + id + " Not Found");
         }
+        // Validate, date is diferent of start status
         if (!ma.getStatus().getId().equals(StatusKeys.START_STATUS)) {
             throw new BackEndException("Invalid status: " + ma.getStatus().getId() + " ");
         }
